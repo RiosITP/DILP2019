@@ -76,7 +76,7 @@ function draw() {
   background(r, g, b);
   //sendLED();
   let spectrum = fft.analyze();
-  stroke(255);
+  stroke(255,255,0);
   noFill();
   translate(width / 2, height / 2); // translate shape to center of the canvas
 
@@ -87,12 +87,9 @@ function draw() {
 
   for (let x = 0; x < spectrum.length; x++) {        // loop through all points and plot them in a circle
     let amp = map(spectrum[x], 0, 255, 0, height/2); // map dist from center to amplitude of a given frequency
-    let gval = map(x, 0, spectrum.length, 0, 255);
-    let angle = map(x,0,spectrum.length,0,TWO_PI);
-   // fill(255, gval, 0);
-    stroke(255, gval, 0);
+    let angle = map(x,0,spectrum.length,0,TWO_PI); // map the spectrum to the circumference of a circle
     let a = amp * sin(angle);
-    let  b = amp *cos(angle);
+    let b = amp * cos(angle);
    //let a = amp * sin(angle*102); // take sine of a multiplied angle to get more rotations
    //let  b = amp *cos(angle*102); // take cosine of a multiplied angle to get more rotations
    vertex(a, b);
