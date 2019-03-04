@@ -3,14 +3,14 @@ let r = 0;
 let g = 0;
 let b = 0;
 let onOff = 0;
-let note1 = "G#3";
-let note2 = "Cb3";
+let note1 = "A3";
+let note2 = "F4";
 let playing1 = false;
 let playing2 = false;
 let fft;
 let mic;
-
 let synth;
+let zoom = 1; // since synth and vocal frequencies are all within a small range, lets make a variable to control zooming in on our spectrum 
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -19,11 +19,11 @@ function setup() {
   // Let's list the ports available
   var portlist = serial.list();
   
-  mic = new p5.AudioIn();
+  mic = new p5.AudioIn(); // use the microphone to pick up audio from the real world
   
-  fft = new p5.FFT();
-  fft.setInput(synth);
-//  fft.setInput(mic);
+  fft = new p5.FFT();  // set your new fft object
+  fft.setInput(synth); // use set input so the fft knows what source to analyze
+//  fft.setInput(mic);  // you can set the input for the fft to the synth or the mic, or both!
 
   // Assuming our Arduino is connected, let's open the connection to it
   // Change this to the name of your arduino's serial port
@@ -74,16 +74,20 @@ function gotData() {
 function draw() {
   background(r, g, b);
   //sendLED();
-  let spectrum = fft.analyze();
+  let spectrum = fft.analyze(); // analyze the fft each draw loop and save it in an array called spectrum
   
-  zoom = map(mouseX,0,width,1,100)
+  zoom = map(mouseX,0,width,1,100); // map our mouseX to control how much we want to zoom on our spectrum
+	
   stroke(255);
   noFill();
+//draw the active spectrum as a polyline
   beginShape();
-  for (let i = 0; i < spectrum.length; i++) {
-    let x = (i*( width / spectrum.length))*zoom
-    let y = map(spectrum[i],0,255, height/2,0);
-    vertex(x, y);
+  for (let i = 0; i < spectrum.length; i++) {   // loop through the spectrum (1024 values by default)
+//for each frequency band, map an x value, map a y value, and draw a vertex at that point.
+    let x = map(i, 0, spectrum.length, 0, width * zoom); // map the x value of the line.  Multiply by zoom to zoom in on the line
+    let y = map(spectrum[i],0,255, height/2, 0); // map the value of the amplitude at a given frequency, to height of the line.
+	  //the output of the y mapping is from half the height to 0 so that it draws from the center of the screen with louder frequencies toward the top
+    vertex(x, y); // plot that vertex
   }
-  endShape();
+  endShape(); 
 }
