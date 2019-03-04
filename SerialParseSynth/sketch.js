@@ -1,9 +1,8 @@
-let data;
+let data; // array to store incoming values
 let r = 0;
 let g = 0;
 let b = 0;
-let onOff = 0;
-let note1 = "G3";
+let note1 = "A#3";
 let note2 = "C3";
 let playing1 = false;
 let playing2 = false;
