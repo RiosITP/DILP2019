@@ -20,10 +20,10 @@ function setup() {
   var portlist = serial.list();
   
   mic = new p5.AudioIn(); // use the microphone to pick up audio from the real world
-  
-  fft = new p5.FFT();  // set your new fft object
-  fft.setInput(synth); // use set input so the fft knows what source to analyze
-//  fft.setInput(mic);  // you can set the input for the fft to the synth or the mic, or both!
+  mic.start();            // enable microphone
+  fft = new p5.FFT();     // set your new fft object
+  fft.setInput(synth);    // use set input so the fft knows what source to analyze
+//  fft.setInput(mic);    // you can set the input for the fft to the synth or the mic, or both!
 
   // Assuming our Arduino is connected, let's open the connection to it
   // Change this to the name of your arduino's serial port
