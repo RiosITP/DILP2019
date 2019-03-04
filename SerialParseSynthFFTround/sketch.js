@@ -76,34 +76,28 @@ function draw() {
   background(r, g, b);
   //sendLED();
   let spectrum = fft.analyze();
-  
-  zoom = map(mouseX,0,width,1,100)
   stroke(255);
   noFill();
-  translate(width / 2, height / 2);
- //translate(mouseX,mouseY);
-
-
+  translate(width / 2, height / 2); // translate shape to center of the canvas
 
   //fill(255);
   beginShape();
- angle = TWO_PI/spectrum.length;
+ 
 
-  for (let x = 0; x < spectrum.length; x++) {
-    let amp = map(spectrum[x], 0, 255, 0, height/2);
+
+  for (let x = 0; x < spectrum.length; x++) {        // loop through all points and plot them in a circle
+    let amp = map(spectrum[x], 0, 255, 0, height/2); // map dist from center to amplitude of a given frequency
     let gval = map(x, 0, spectrum.length, 0, 255);
-    let ang = map(x,0,spectrum.length,0,TWO_PI);
+    let angle = map(x,0,spectrum.length,0,TWO_PI);
    // fill(255, gval, 0);
     stroke(255, gval, 0);
-   let a = amp * sin(ang*11);
-    let  b = amp *cos(ang*17);
-   //  let a = amp * sin(ang*102);
-   //let  b = amp *cos(ang*102);
-   // rotate(angle);
-   // rotate(angle*x);
-   // point(0, amp + 50);
+    let a = amp * sin(angle);
+    let  b = amp *cos(angle);
+   //let a = amp * sin(angle*102); // take sine of a multiplied angle to get more rotations
+   //let  b = amp *cos(angle*102); // take cosine of a multiplied angle to get more rotations
    vertex(a, b);
+// point(a,b)    // uncomment this line and comment out vertex(), beginShape(), and endShape() to get a point cloud effect
 
   }
-   endShape(CLOSE);
+   endShape(CLOSE); // use close to connect the last point to the first point of the shape / line
 }
