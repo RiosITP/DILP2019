@@ -1,16 +1,7 @@
-let data;
-let r = 0;
-let g = 0;
-let b = 0;
-let onOff = 0;
-let freq = 440;
-let note1 = "A#3";
-let note2 = "C3";
-let playing1 = 0;
-let playing2 = 0;
-
-let osc;
-let synth;
+let data; // data to hold array of incoming values
+let r = 0; // variable for background red color
+let g = 0; // variable for background green color
+let b = 0; // variable for background blue color
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
